@@ -5,7 +5,7 @@ const contactSchema = mongoose.Schema({
         type:String,
         required:[true,"please enter the name"]
     },
-    enail : {
+    email : {
         type:String,
         required:[true,"please enter the  email"]
     },
@@ -14,7 +14,7 @@ const contactSchema = mongoose.Schema({
         required:[true,"please enter the phone"]
     }
 },{
-    timeStamps:true
+    timestamps:true
 })
 
-module.exports = mongoose.model("contact",contactSchema)
+module.exports = mongoose.model("Contact",contactSchema)
