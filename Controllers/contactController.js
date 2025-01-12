@@ -34,9 +34,31 @@ const postContact = asyncHandler(async (req, res) => {
 });
 
 const deleteContact = asyncHandler(async (req,res) => {
-    console.log("id " , req.params.id );
-    
+    const { id } = req.params
+    const contact = await Contact.findById(id)
+    if (!contact) {
+        res.status(400)
+        throw new Error("contact not found")
+    }
+    await Contact.deleteOne({_id : id})
+    res.status(200).json({message : `delete contact for ${req.params.id}`})
 })
+// const deleteContact = asyncHandler(async (req, res) => {
+//     const { id } = req.params; // Extract ID from request parameters
+//     console.log("ID:", id);
+
+//     // Find the contact by ID
+//     const contact = await Contact.findById(id);
+//     if (!contact) {
+//         res.status(404); // Use 404 for not found errors
+//         throw new Error("Contact not found");
+//     }
+
+//     // Delete the contact
+//     await Contact.deleteOne({ _id: id });
+
+//     res.status(200).json({ message: `Deleted contact with ID: ${id}` });
+// });
 
 
 const getContactid =asyncHandler(async (req,res)=> {
