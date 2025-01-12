@@ -33,17 +33,10 @@ const postContact = asyncHandler(async (req, res) => {
     res.status(201).json(contact)
 });
 
-const deleteContact = asyncHandler(async (req, res) => {
-    console.log(req.params.id);
-    const contact = await Contact.findById(req.params.id);
-    // Check if the contact exists
-    if (!contact) {
-        res.status(404);
-        throw new Error("Contact not found");
-    }
-    await contact.deleteOne();
-    res.status(200).json(contact)
-});
+const deleteContact = asyncHandler(async (req,res) => {
+    console.log("id " , req.params.id );
+    
+})
 
 
 const getContactid =asyncHandler(async (req,res)=> {
