@@ -6,9 +6,18 @@ const getContact =asyncHandler (async (req,res)=> {
     const contacts = await Contact.find()
     res.status(200).json(contacts)
 })
-const updateContact = asyncHandler(async (req,res)=> {
-    res.send(`update contact ${req.params.id}`)
-})
+const updateContact = asyncHandler(async (req, res) => {
+    console.log("Received request:", req.params.id, req.body);
+    // Find the contact by ID
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) {
+        res.status(404);
+        throw new Error("Contact not found");
+    }
+    const updatedContact = await Contact.findByIdAndUpdate(req.params.id,req.body,{new:true})
+    res.status(200).json(updatedContact)
+});
+ 
 const postContact = asyncHandler(async (req, res) => {
     console.log("Request Body:", req.body); // Debug log
 
@@ -24,11 +33,25 @@ const postContact = asyncHandler(async (req, res) => {
     res.status(201).json(contact)
 });
 
-const deleteContact =asyncHandler(async (req,res)=> {
-    res.send(`delete contact ${req.params.id}`)
-})
+const deleteContact = asyncHandler(async (req, res) => {
+    console.log(req.params.id);
+    const contact = await Contact.findById(req.params.id);
+    // Check if the contact exists
+    if (!contact) {
+        res.status(404);
+        throw new Error("Contact not found");
+    }
+    await contact.deleteOne();
+    res.status(200).json(contact)
+});
+
 
 const getContactid =asyncHandler(async (req,res)=> {
-    res.send(`get all contacts ${req.params.id}`)
+    const contact = await Contact.findById(req.params.id)
+    if(!contact){
+        res.status(400)
+        throw new Error("Contact no found")
+    }
+    res.status(201).json(contact)
 })
 module.exports = {getContact,updateContact,postContact,deleteContact,getContactid}
