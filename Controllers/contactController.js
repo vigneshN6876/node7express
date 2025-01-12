@@ -18,20 +18,20 @@ const updateContact = asyncHandler(async (req, res) => {
     res.status(200).json(updatedContact)
 });
  
-const postContact = asyncHandler(async (req, res) => {
-    console.log("Request Body:", req.body); // Debug log
-
-    const { name, email, phone } = req.body;
-
-    if (!name || !email || !phone) {
-        res.status(400);
-        throw new Error("All fields are mandatory");
+const postContact = asyncHandler(async (req,res) => {
+    console.log(req.body);
+    const { name , email , phone } = req.body
+    if(!name || !email || !phone){
+        res.status(400)
+        throw new Error("all fields are mandatory")
     }
     const contact = await Contact.create({
-        name,email,phone
-    })
-    res.status(201).json(contact)
-});
+        name,
+        email,
+        phone
+ } )
+    res.status(200).json(contact)
+})
 
 const deleteContact = asyncHandler(async (req,res) => {
     const { id } = req.params
